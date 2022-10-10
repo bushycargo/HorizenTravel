@@ -1,6 +1,6 @@
 body{
     margin: 0;
-    background-color: #282b30;
+    background-color: #424549;
 }
 .grid-container{
     display: grid;
@@ -26,5 +26,5 @@ body{
     padding-left: 10px;
 }
 header{
-    background-color: #36393e;
+    background-color: #282b30;
 }
