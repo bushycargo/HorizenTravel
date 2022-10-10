@@ -1,0 +1,30 @@
+body{
+    margin: 0;
+    background-color: #282b30;
+}
+.grid-container{
+    display: grid;
+    width: 100%;
+}
+.header-grid{
+    display: inline-grid;
+    grid-template-columns: auto auto;
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.menu{
+    display: inline-grid;
+    grid-template-columns: auto auto;
+}
+.menu-item{
+    list-style-type: none;
+    padding: 10px 0 0;
+}
+.menu-item > li{
+    display: inline;
+    padding-left: 10px;
+}
+header{
+    background-color: #36393e;
+}
