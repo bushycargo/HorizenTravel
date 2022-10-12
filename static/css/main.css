@@ -1,30 +1,81 @@
+/*Colours*/
+/*F9F904*/
+/*520075*/
+
+
+
 body{
     margin: 0;
-    background-color: #424549;
+    background-color: #520075;
+    height: 100%;
 }
 .grid-container{
     display: grid;
     width: 100%;
 }
 .header-grid{
+    color: #F9F904;
     display: inline-grid;
     grid-template-columns: auto auto;
     width: 100%;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding: 0;
 }
 .menu{
     display: inline-grid;
     grid-template-columns: auto auto;
+    font-size: small;
+    text-align: center;
 }
 .menu-item{
     list-style-type: none;
-    padding: 10px 0 0;
+    padding: 20px 0 0;
+    text-decoration: none;
+    color: #F9F904;
 }
 .menu-item > li{
     display: inline;
     padding-left: 10px;
 }
+
 header{
-    background-color: #282b30;
+    font-family: cindie_monod, Arial, sans-serif;
+    padding-left: 2.5%;
+}
+a{
+    all: unset;
+}
+.disabled{
+    visibility: hidden;
+}
+#slogan-box{
+    font-family: cindie_monod, Arial, sans-serif;
+    color: #F9F904;
+    grid-column-start: -3;
+    grid-column-end: -1;
+    padding: 20% 25% 35% 25%;
+            /*T   R   B  L*/
+    text-align: center;
+}
+.scroll-box{
+    background-color: #F9F904;
+}
+.scroll-box > p{
+    color: #520075;
+    font-family: cindie_monod, Arial, sans-serif;
+    text-align: center;
+}
+.scroll-box > ul{
+    color: #520075;
+    font-family: cindie_monod, Arial, sans-serif;
+    text-align: center;
+    list-style-position: inside;
+}
+#scroll-box-header{
+    color: #520075;
+    font-family: cindie_monod, Arial, sans-serif;
+    text-align: center;
+}
+#scroll-box-image{
+    width: 33%;
+    text-align: center;
 }

@@ -2,28 +2,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Horizon Travel</title>
     <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="/static/css/fonts/stylesheet.css" type="text/css" />
+
 </head>
 <body>
 <div class="grid-container">
     <header class="grid-item header">
         <div class="header-grid">
-            <h1 class="header-title">Header</h1>
+            <h2 class="header-title"><a href="/">Horizon Travel</a></h2>
             <div class="menu">
                 <ul class="menu-left menu-item">
-                    <li><a href="/">Home</a></li>
                     <li><a href="/about">About</a></li>
                     <li><a href="/book">Book</a></li>
                 </ul>
                 <ul class="menu-right menu-item">
-                    <li><a href="/login">Login</a></li>
+                    <li class="disabled"><a href="/login">Login</a></li>
                     <li><a href="/account">Account</a></li>
                     <li><a href="/sign-out">Sign Out</a></li>
                 </ul>
             </div>
+            <div id="slogan-box">
+                <h1>Travel Made Easy</h1>
+                <a href="/book">Click here to book now!</a>
+            </div>
         </div>
     </header>
+    <div class="grid-item scroll-box">
+        <h2 id="scroll-box-header">Who we are</h2>
+        <p>Here at Horizen Travel we have 3 main values!</p>
+        <ul>
+            <li>Safety</li>
+            <li>Speed</li>
+            <li>Affordability</li>
+        </ul>
+        <p><img src="/static/imgs/scroll-box-plane-v2.png" alt="Plane" id="scroll-box-image"></p>
+    </div>
 </div>
 </body>
 </html>
