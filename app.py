@@ -13,5 +13,10 @@ def about():  # put application's code here
     return render_template("about.html")
 
 
+@app.route('/book')
+def book():  # put application's code here
+    return render_template("book.html")
+
+
 if __name__ == '__main__':
     app.run()
