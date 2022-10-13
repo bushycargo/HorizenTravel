@@ -18,6 +18,7 @@ body{
 .grid-container{
     display: grid;
     width: 100%;
+    grid-template-columns: 33% 33% 33%;
 }
 .header-grid{
     color: #F9F904;
@@ -42,10 +43,10 @@ body{
     display: inline;
     padding-left: 10px;
 }
-
 header{
-    font-family: cindie_monod, Arial, sans-serif;
     padding-left: 2.5%;
+    grid-column-start: -4;
+    grid-column-end: -1;
 }
 a{
     all: unset;
@@ -64,6 +65,8 @@ a{
 }
 .scroll-box{
     background-color: #F9F904;
+    grid-column-start: -4;
+    grid-column-end: -1;
 }
 .scroll-box > p{
     color: #520075;
@@ -110,4 +113,37 @@ a{
     grid-column-start: -3;
     grid-column-end: -1;
     text-align: center;
+}
+.grid-item{
+    font-family: cindie_monod, Arial, sans-serif;
+}
+.mid-content-box{
+    text-align: center;
+    color: #F9F904;
+    grid-column-start: -3;
+    grid-column-end: -2;
+}
+.left-content-box{
+    text-align: center;
+    color: #F9F904;
+    grid-column-start: -4;
+    grid-column-end: -3;
+}
+.right-content-box{
+    text-align: center;
+    color: #F9F904;
+    grid-column-start: -2;
+    grid-column-end: -1;
+}
+.faq{
+    list-style-position: inside;
+    display: inline-grid;
+    text-align: left;
+    grid-template-columns: 50% 50%;
+}
+.faq > ul{
+    padding: 0;
+}
+.faq-li{
+    padding-bottom: 30px;
 }
