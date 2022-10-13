@@ -1,8 +1,0 @@
-@font-face {
-    font-family: 'cindie_monod';
-    src: url('/static/css/fonts/cindiemono-d-webfont.woff2') format('woff2'),
-         url('/static/css/fonts/cindiemono-d-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-
-}
