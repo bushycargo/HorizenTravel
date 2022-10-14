@@ -1,6 +1,8 @@
 /*Colours*/
 /*F9F904*/
 /*520075*/
+/*font-family: Andalemo, Andalemo;*/
+
 
 @font-face {
     font-family: 'cindie_monod';
@@ -18,7 +20,7 @@ body{
 .grid-container{
     display: grid;
     width: 100%;
-    grid-template-columns: 33% 33% 33%;
+    grid-template-columns: 33% 34% 33%;
 }
 .header-grid{
     color: #F9F904;
@@ -146,4 +148,8 @@ a{
 }
 .faq-li{
     padding-bottom: 30px;
+}
+.cssP{
+    font-family: Andale Mono,AndaleMono,monospace;
+    font-size: x-large;
 }
