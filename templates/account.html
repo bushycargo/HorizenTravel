@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Horizon Travels</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <script src="/static/js/accountControls.js"></script>
+</head>
+<body>
+<div class="grid-container">
+    <header class="grid-item">
+        <div class="header-grid">
+            <h2 class="header-title"><a href="/">Horizon Travels</a></h2>
+            <div class="menu">
+                <ul class="menu-left menu-item">
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/book">Book</a></li>
+                    <li id="login"><a onclick="login()">Login</a></li>
+                </ul>
+                <ul class="menu-right menu-item">
+                    <li id="account" class="disabled"><a href="/account">Account</a></li>
+                    <li id="signOut" class="disabled"><a onclick="signOut()">Sign Out</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <div class="grid-item mid-content-box">
+        <h2>Your Account</h2>
+    </div>
+    <div class="grid-item" id="account-grid">
+        <div class="account-left">
+            <h3>Account Settings</h3>
+            <ul class="cssP">
+                <li><a href="/change-password">Change Password</a></li>
+                <li><a href="/change-email">Change Email</a></li>
+            </ul>
+        </div>
+        <div class="account-right">
+            <h3>Bookings</h3>
+            <div class="cssP">
+                <p>Current Bookings</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

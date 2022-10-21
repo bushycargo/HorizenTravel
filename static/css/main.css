@@ -87,6 +87,8 @@ a{
 .cssP{
     font-family: Andale Mono,AndaleMono,monospace;
     font-size: x-large;
+    text-decoration: none;
+    list-style-type: none;
 }
 
 /*Main Page Specific*/
@@ -158,4 +160,23 @@ a{
 }
 .faq-li{
     padding-bottom: 30px;
+}
+
+/*Account Page Specific*/
+#account-grid{
+    display: grid;
+    width: 100%;
+    grid-template-columns: 50% 50%;
+    grid-column-start: -4;
+    grid-column-end: -1;
+    text-align: center;
+    color: #F9F904;
+}
+.account-left{
+    grid-column-start: -3;
+    grid-column-end: -2;
+}
+.account-right{
+    grid-column-start: -2;
+    grid-column-end: -1;
 }
