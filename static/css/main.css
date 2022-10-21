@@ -12,6 +12,7 @@
     font-style: normal;
 }
 
+/*General*/
 body{
     margin: 0;
     background-color: #520075;
@@ -57,6 +58,43 @@ a{
 .disabled{
     visibility: hidden;
 }
+.fivePSidebar{
+    padding-left: 5%;
+    padding-right: 5%;
+    text-align: center;
+}
+.grid-item{
+    font-family: cindie_monod, Arial, sans-serif;
+}
+.mid-content-box{
+    text-align: center;
+    color: #F9F904;
+    grid-column-start: -3;
+    grid-column-end: -2;
+}
+.left-content-box{
+    text-align: center;
+    color: #F9F904;
+    grid-column-start: -4;
+    grid-column-end: -3;
+}
+.right-content-box{
+    text-align: center;
+    color: #F9F904;
+    grid-column-start: -2;
+    grid-column-end: -1;
+}
+.cssP{
+    font-family: Andale Mono,AndaleMono,monospace;
+    font-size: x-large;
+}
+
+/*Main Page Specific*/
+#bottom-text{
+    grid-column-start: -3;
+    grid-column-end: -1;
+    text-align: center;
+}
 #slogan-box{
     font-family: cindie_monod, Arial, sans-serif;
     color: #F9F904;
@@ -65,6 +103,22 @@ a{
     padding: 20% 25% 18% 25%;
             /*T   R   B  L*/
     text-align: center;
+}
+#contact{
+    text-align: center;
+    font-family: cindie_monod, Arial, sans-serif;
+    color: #520075;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+#submit{
+    background: #520075;
+    color: #F9F904;
+    border: 1px solid #000000;
+    height: 50px;
+    width: 20%;
+    font-family: cindie_monod, Arial, sans-serif;
+    text-shadow: none;
 }
 .scroll-box{
     background-color: #F9F904;
@@ -91,53 +145,8 @@ a{
     width: 33%;
     text-align: center;
 }
-.fivePSidebar{
-    padding-left: 5%;
-    padding-right: 5%;
-    text-align: center;
-}
-#contact{
-    text-align: center;
-    font-family: cindie_monod, Arial, sans-serif;
-    color: #520075;
-    padding-top: 30px;
-    padding-bottom: 30px;
-}
-#submit{
-    background: #520075;
-    color: #F9F904;
-    border: 1px solid #000000;
-    height: 50px;
-    width: 20%;
-    font-family: cindie_monod, Arial, sans-serif;
-    text-shadow: none;
-}
-#bottom-text{
-    grid-column-start: -3;
-    grid-column-end: -1;
-    text-align: center;
-}
-.grid-item{
-    font-family: cindie_monod, Arial, sans-serif;
-}
-.mid-content-box{
-    text-align: center;
-    color: #F9F904;
-    grid-column-start: -3;
-    grid-column-end: -2;
-}
-.left-content-box{
-    text-align: center;
-    color: #F9F904;
-    grid-column-start: -4;
-    grid-column-end: -3;
-}
-.right-content-box{
-    text-align: center;
-    color: #F9F904;
-    grid-column-start: -2;
-    grid-column-end: -1;
-}
+
+/*About Page Specific*/
 .faq{
     list-style-position: inside;
     display: inline-grid;
@@ -149,8 +158,4 @@ a{
 }
 .faq-li{
     padding-bottom: 30px;
-}
-.cssP{
-    font-family: Andale Mono,AndaleMono,monospace;
-    font-size: x-large;
 }
