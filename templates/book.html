@@ -5,6 +5,9 @@
     <title>Horizon Travels</title>
     <link rel="stylesheet" href="/static/css/main.css">
     <script src="/static/js/accountControls.js"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 <body>
 <div class="grid-container">
@@ -26,7 +29,27 @@
     </header>
     <div class="grid-item mid-content-box">
         <h2>Booking</h2>
-{#        Put some varity of booking form here#}
+        <form class="cssP">
+            <label>
+                Enter Destination:
+                <input type="text">
+            </label><br>
+            <label>
+                Enter Date:
+                <input type="date">
+            </label><br>
+            <label>
+                Enter Return Date:
+                <input type="date">
+            </label><br>
+            <label>
+                Number of Passengers:
+                <input type="number">
+            </label>
+
+            <br><br>
+            <input type="submit" value="Search" id="submit" style="color: #520075; background: #F9F904">
+        </form>
     </div>
 </div>
 </body>
