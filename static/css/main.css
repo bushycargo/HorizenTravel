@@ -90,7 +90,14 @@ a{
     text-decoration: none;
     list-style-type: none;
 }
-
+.border{
+    border-radius: 25px;
+    color: #F9F904;
+    padding: 5px;
+    margin: 20px;
+    border: 2px solid #F9F904;
+    display: block;
+}
 /*Main Page Specific*/
 #bottom-text{
     grid-column-start: -3;
@@ -118,7 +125,7 @@ a{
     color: #F9F904;
     border: 1px solid #000000;
     height: 50px;
-    width: 20%;
+    width: 30%;
     font-family: cindie_monod, Arial, sans-serif;
     text-shadow: none;
 }
