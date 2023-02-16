@@ -1,8 +1,10 @@
 from flask import Flask, render_template
+import mysql.connector
 
 app = Flask(__name__)
 
-#Template Routes
+
+# Template Routes
 @app.route('/')
 def index():
     return render_template("index.html")
@@ -22,10 +24,15 @@ def book():  # put application's code here
 def account():
     return render_template("account.html")
 
-#API- todo
-@app.route('/api/v1/search')
+
+# API- todo
+api = '/api/v1/'
+
+
+@app.route(api + 'search')
 def search():
     return "0"
+
 
 if __name__ == '__main__':
     app.run()
