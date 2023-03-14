@@ -1,7 +1,13 @@
 from flask import Flask, render_template
-import mysql.connector
+
+from dbfunc import DatabaseHandler
 
 app = Flask(__name__)
+
+Database = DatabaseHandler()
+Database.connect()
+print("Connection Test Completed")
+Database.disconnect()
 
 
 # Template Routes
