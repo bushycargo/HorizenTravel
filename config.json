@@ -1,0 +1,10 @@
+{
+  "ssh_host" : "",
+  "ssh_username" : "",
+  "ssh_pkey" : "",
+  "ssh_pkey_password" : "",
+  "database_username" : "",
+  "database_password" : "",
+  "database_name" : "",
+  "localhost" : "10.0.90.5"
+}
