@@ -1,0 +1,122 @@
+[
+    {
+      "origin": "NCL",
+      "destination": "BRS",
+      "departure_time": "16 45",
+      "arrival_time": "18 00"
+    },
+    {
+      "origin": "BRS",
+      "destination": "NCL",
+      "departure_time": "08 00",
+      "arrival_time": "09 15"
+    },
+    {
+      "origin": "CWL",
+      "destination": "EDI",
+      "departure_time": "06 00",
+      "arrival_time": "07 30"
+    },
+    {
+      "origin": "BRS",
+      "destination": "MAN",
+      "departure_time": "11 30",
+      "arrival_time": "12 30"
+    },
+    {
+      "origin": "MAN",
+      "destination": "BRS",
+      "departure_time": "12 20",
+      "arrival_time": "13 20"
+    },
+    {
+      "origin": "BRS",
+      "destination": "LGW",
+      "departure_time": "07 40",
+      "arrival_time": "08 20"
+    },
+    {
+      "origin": "LGW",
+      "destination": "MAN",
+      "departure_time": "11 00",
+      "arrival_time": "12 20"
+    },
+    {
+      "origin": "MAN",
+      "destination": "GLA",
+      "departure_time": "12 20",
+      "arrival_time": "13 30"
+    },
+    {
+      "origin": "BRS",
+      "destination": "GLA",
+      "departure_time": "07 40",
+      "arrival_time": "08 45"
+    },
+    {
+      "origin": "GLA",
+      "destination": "NCL",
+      "departure_time": "14 30",
+      "arrival_time": "15 45"
+    },
+    {
+      "origin": "NCL",
+      "destination": "MAN",
+      "departure_time": "16 15",
+      "arrival_time": "17 05"
+    },
+    {
+      "origin": "MAN",
+      "destination": "BRS",
+      "departure_time": "18 25",
+      "arrival_time": "19 30"
+    },
+    {
+      "origin": "BRS",
+      "destination": "MAN",
+      "departure_time": "06 20",
+      "arrival_time": "07 20"
+    },
+    {
+      "origin": "PSM",
+      "destination": "DND",
+      "departure_time": "10 00",
+      "arrival_time": "12 00"
+    },
+    {
+      "origin": "EDI",
+      "destination": "CWL",
+      "departure_time": "18 30",
+      "arrival_time": "20 00"
+    },
+    {
+      "origin": "SOU",
+      "destination": "MAN",
+      "departure_time": "12 00",
+      "arrival_time": "13 30"
+    },
+    {
+      "origin": "MAN",
+      "destination": "SOU",
+      "departure_time": "19 00",
+      "arrival_time": "20 30"
+    },
+    {
+      "origin": "BHX",
+      "destination": "NCL",
+      "departure_time": "16 00",
+      "arrival_time": "17 30"
+    },
+    {
+      "origin": "NCL",
+      "destination": "BHX",
+      "departure_time": "06 00",
+      "arrival_time": "07 30"
+    },
+    {
+      "origin": "ABZ",
+      "destination": "PSM",
+      "departure_time": "07 00",
+      "arrival_time": "09 00"
+    }
+]
