@@ -1,6 +1,6 @@
 import json
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 
 from dbfunc import DatabaseHandler
 
@@ -45,9 +45,11 @@ def account():
 def loginPage():
     return render_template("login.html")
 
+
 @app.route('/signup')
 def signupPage():
     return render_template("signup.html")
+
 
 # API- todo
 api = '/api/v1/'
@@ -61,19 +63,18 @@ def getAirports():
     return json.dumps(airports)
 
 
-@app.route(api + 'search')
+@app.route(api + 'search', methods=['POST'])
 def searchFlights():
     # Needs either origin or destination in airport code (e.g. BHX)
     Database.connect()  # Connect Database
     # request.args.get() to get args
-
     origin = request.args.get("origin")
     destination = request.args.get("destination")
 
-    if destination == '':  # If destination is empty then it must be an origin only search
+    if destination is None:  # If destination is empty then it must be an origin only search
         output = Database.runSQL(
             f"SELECT t.* FROM `jh-horizen-travel`.flight t WHERE origin = '{origin}' ORDER BY flightNumber")
-    elif origin == '':  # If origin is empty then it must be a destination only search
+    elif origin is None:  # If origin is empty then it must be a destination only search
         output = Database.runSQL(
             f"SELECT t.* FROM `jh-horizen-travel`.flight t WHERE destination = '{destination}' ORDER BY flightNumber")
     else:
@@ -156,18 +157,19 @@ def updateUser():
     return 200
 
 
-@app.route(api + 'submit-form')
+@app.route(api + 'contact-form', methods=['POST'])
 def contactForm():
-    first_name = request.args.get('first_name')
-    last_name = request.args.get('last_name')
-    email = request.args.get('email')
-    message = request.args.get('message')
+    first_name = request.form.get('first_name')
+    last_name = request.form.get('last_name')
+    email = request.form.get('email')
+    message = request.form.get('message')
 
     Database.connect()
     Database.runSQL(
         f"INSERT INTO `jh-horizen-travel`.form (first_name, last_name, email, message) VALUES ('{first_name}', '{last_name}', '{email}', '{message}')")
     Database.disconnect()
-    return 200
+    print(f"New contact form from: {email}")
+    return redirect("/")
 
 
 @app.route(api + 'admin/report')
