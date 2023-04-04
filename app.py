@@ -44,6 +44,11 @@ def account():
 # API- todo
 api = '/api/v1/'
 
+@app.route(api + 'get/airports')
+def getAirports():
+    Database.connect()
+    airports = Database.runSQL("SELECT t.* FROM `jh-horizen-travel`.airport t")
+    return json.dumps(airports)
 
 @app.route(api + 'search')
 def searchFlights():
