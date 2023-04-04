@@ -85,15 +85,17 @@ def searchFlights():
 @app.route(api + "book/new")
 def bookFlight():
     Database.connect()
-    user_id = request.args.get('user_id')
-    flight_number = request.args.get('flight_number')
+    user_id = request.json['user_id']
+    flight_number = request.json['flight_number']
+    passengers = request.json['passengers']
+
     current_bookings = \
         Database.runSQL(f"SELECT t.* FROM `jh-horizen-travel`.flight t WHERE flightNumber = {flight_number}")[0][5]
-    if current_bookings <= 0:
+    if current_bookings < passengers:
         return 406
     else:
         Database.runSQL(
-            f"UPDATE `jh-horizen-travel`.flight t SET t.bookings = {current_bookings - 1} WHERE t.flightNumber = {flight_number}")
+            f"UPDATE `jh-horizen-travel`.flight t SET t.bookings = {current_bookings - passengers} WHERE t.flightNumber = {flight_number}")
         Database.runSQL(
             f"INSERT INTO `jh-horizen-travel`.booking (user_id, flight_number) VALUES ({user_id}, {flight_number})")
         print(f"Created new booking for user: {user_id}")
