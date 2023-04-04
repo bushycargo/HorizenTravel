@@ -13,10 +13,6 @@ app = Flask(__name__)
 Database = DatabaseHandler()
 Database.connect()
 print("Connection Test Completed")
-# Database.getFlightData()  # Populates the database with test flight data, only needs to be run once per DB print(
-# json.dumps(Database.runSQL(f"SELECT t.* FROM `jh-horizen-travel`.flight t WHERE origin = 'MAN' ORDER BY
-# flightNumber"))) Database.runSQL(f"INSERT INTO `jh-horizen-travel`.user (firstName, lastName, username, password,
-# email) " f"VALUES ('foo', 'foo', 'foo', 'foo', 'foo')")
 Database.disconnect()
 
 
