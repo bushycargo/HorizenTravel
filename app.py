@@ -44,12 +44,14 @@ def account():
 # API- todo
 api = '/api/v1/'
 
+
 @app.route(api + 'get/airports')
 def getAirports():
     Database.connect()
     airports = Database.runSQL("SELECT t.* FROM `jh-horizen-travel`.airport t")
     Database.disconnect()
     return json.dumps(airports)
+
 
 @app.route(api + 'search')
 def searchFlights():
@@ -129,7 +131,8 @@ def updateUser():
     lastname = request.args.get('lastname')
 
     Database.connect()
-    if Database.runSQL(f"SELECT t.password FROM `jh-horizen-travel`.user t WHERE username = '{username}'")[0][0] != old_password:
+    if Database.runSQL(f"SELECT t.password FROM `jh-horizen-travel`.user t WHERE username = '{username}'")[0][
+        0] != old_password:
         return 406
     if len(new_password) >= 2:
         Database.runSQL(
@@ -143,6 +146,24 @@ def updateUser():
         Database.runSQL(f"UPDATE `jh-horizen-travel`.user t SET t.lastName = {lastname} WHERE username = '{username}'")
     Database.disconnect()
     return 200
+
+
+@app.route(api + 'submit-form')
+def contactForm():
+    first_name = request.args.get('first_name')
+    last_name = request.args.get('last_name')
+    email = request.args.get('email')
+    message = request.args.get('message')
+
+    Database.connect()
+    Database.runSQL(f"INSERT INTO `jh-horizen-travel`.form (first_name, last_name, email, message) VALUES ('{first_name}', '{last_name}', '{email}', '{message}')")
+    Database.disconnect()
+    return 200
+
+
+@app.route(api + 'admin/report')
+def generateAdminReport():
+    return 501
 
 
 if __name__ == '__main__':
