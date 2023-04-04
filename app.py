@@ -68,8 +68,8 @@ def searchFlights():
     # Needs either origin or destination in airport code (e.g. BHX)
     Database.connect()  # Connect Database
     # request.args.get() to get args
-    origin = request.args.get("origin")
-    destination = request.args.get("destination")
+    origin = request.json["origin"]
+    destination = request.json["destination"]
 
     if destination is None:  # If destination is empty then it must be an origin only search
         output = Database.runSQL(
