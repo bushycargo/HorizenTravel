@@ -1,6 +1,6 @@
 import json
 
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, make_response
 
 from dbfunc import DatabaseHandler
 
@@ -59,12 +59,18 @@ def getAirports():
     return json.dumps(airports)
 
 
-@app.route(api + 'search', methods=['POST'])
+@app.route(api + 'search', methods=['GET'])
 def searchFlights():
     # Needs either origin or destination in airport code (e.g. BHX)
     Database.connect()  # Connect Database
-    origin = request.json["origin"]
-    destination = request.json["destination"]
+    try:
+        origin = request.json["origin"]
+    except KeyError:
+        origin = None
+    try:
+        destination = request.json["destination"]
+    except KeyError:
+        destination = None
 
     if destination is None:  # If destination is empty then it must be an origin only search
         output = Database.runSQL(
@@ -79,7 +85,9 @@ def searchFlights():
 
     print(output)
     Database.disconnect()  # Disconnect Database
-    return json.dumps(output)
+    response = make_response(json.dumps(output))
+    response.headers['Content-Type'] = 'application/json'
+    return response
 
 
 @app.route(api + "book/new")
