@@ -67,7 +67,6 @@ def getAirports():
 def searchFlights():
     # Needs either origin or destination in airport code (e.g. BHX)
     Database.connect()  # Connect Database
-    # request.args.get() to get args
     origin = request.json["origin"]
     destination = request.json["destination"]
 
@@ -108,7 +107,6 @@ def bookFlight():
 
 @app.route(api + 'users/add')
 def newUser():
-    # Get data from JSON args
     Database.connect()
 
     username = request.args.get('username')
@@ -120,7 +118,6 @@ def newUser():
     firstname = request.args.get('firstname')
     lastname = request.args.get('lastname')
 
-    # Conn to database
     # Insert new user into database
     Database.runSQL(f"INSERT INTO `jh-horizen-travel`.user (firstName, lastName, username, password, email) "
                     f"VALUES ('{firstname}', '{lastname}', '{username}', '{password}', '{email}')")
