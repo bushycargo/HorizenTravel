@@ -41,6 +41,11 @@ def account():
     return render_template("account.html")
 
 
+@app.route('/login')
+def loginPage():
+    return render_template("login.html")
+
+
 # API- todo
 api = '/api/v1/'
 
@@ -156,7 +161,8 @@ def contactForm():
     message = request.args.get('message')
 
     Database.connect()
-    Database.runSQL(f"INSERT INTO `jh-horizen-travel`.form (first_name, last_name, email, message) VALUES ('{first_name}', '{last_name}', '{email}', '{message}')")
+    Database.runSQL(
+        f"INSERT INTO `jh-horizen-travel`.form (first_name, last_name, email, message) VALUES ('{first_name}', '{last_name}', '{email}', '{message}')")
     Database.disconnect()
     return 200
 
