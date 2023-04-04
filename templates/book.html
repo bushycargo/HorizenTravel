@@ -29,26 +29,49 @@
     </header>
     <div class="grid-item mid-content-box">
         <h2>Booking</h2>
-        <form class="cssP">
-            <label class="border">
-                Enter Destination:
-                <input type="text">
-            </label>
-            <label class="border">
-                Enter Date:
-                <input type="date">
-            </label>
-            <label class="border">
-                Enter Return Date:
-                <input type="date">
-            </label>
-            <label class="border">
-                Number of Passengers:
-                <input type="number">
-            </label>
-            <input type="submit" value="Search" id="submit" style="color: #520075; background: #F9F904">
+        <form class="cssP" id="booking-form">
+            <hr>
+            <div class="booking-form-inline">
+                <label for="adult">Adults</label>
+                <input type="number" id="adult" name="total_adults" placeholder="1" min="1" required>
+            </div>
+            <div class="booking-form-inline">
+                <label for="child">Children</label>
+                <input type="number" id="child" name="total_children" placeholder="0" min="0">
+            </div>
+            <hr>
+            <div class="booking-form-inline">
+                <label for="flight-date">Flight Date</label>
+                <input type="date" id="flight-date" name="checkin" required>
+            </div>
+            <div class="booking-form-inline">
+                <label for="return-date">Return Date</label>
+                <input type="date" id="return-date" name="checkin" >
+            </div>
+            <hr>
+            <div class="booking-form-inline">
+                <label for="origin_airport">Origin Airport</label>
+                <select id="origin_airport" name="origin_airport" >
+                    <option value="">Choose an Airport</option>
+                    <option value="connecting">Connecting</option>
+                    <option value="adjoining">Adjoining</option>
+                    <option value="adjacent">Adjacent</option>
+                </select>
+            </div>
+            <div class="booking-form-inline">
+                <label for="destination_airport">Destination Airport</label>
+                <select id="destination_airport" name="destination_airport" >
+                    <option value="">Choose an Airport</option>
+                    <option value="connecting">Connecting</option>
+                    <option value="adjoining">Adjoining</option>
+                    <option value="adjacent">Adjacent</option>
+                </select>
+            </div>
+            <hr>
+            <button type="submit" id="submit" style="background-color: #F9F904; color: #520075">Search for Flights</button>
         </form>
     </div>
 </div>
 </body>
 </html>
+

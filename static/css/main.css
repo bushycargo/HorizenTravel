@@ -55,6 +55,9 @@ header{
 a{
     all: unset;
 }
+hr {
+  border: 1px dotted #F9F904;
+}
 .disabled{
     visibility: hidden;
 }
@@ -186,4 +189,13 @@ a{
 .account-right{
     grid-column-start: -2;
     grid-column-end: -1;
+}
+/*Booking Page Specific*/
+
+#booking-form-button{
+
+}
+.booking-form-inline{
+    display: inline-block;
+    padding: 10px;
 }
