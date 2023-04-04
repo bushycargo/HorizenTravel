@@ -48,6 +48,7 @@ api = '/api/v1/'
 def getAirports():
     Database.connect()
     airports = Database.runSQL("SELECT t.* FROM `jh-horizen-travel`.airport t")
+    Database.disconnect()
     return json.dumps(airports)
 
 @app.route(api + 'search')
