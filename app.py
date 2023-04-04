@@ -45,6 +45,9 @@ def account():
 def loginPage():
     return render_template("login.html")
 
+@app.route('/signup')
+def signupPage():
+    return render_template("signup.html")
 
 # API- todo
 api = '/api/v1/'

@@ -29,21 +29,17 @@
     </header>
     <div class="grid-item mid-content-box">
         <div class="login">
-            <h1>Login</h1>
+            <h1>Sign up</h1>
             <form method="post" action="">
-                <p><input type="text" name="username" value="" placeholder="Username"></p>
-                <p><input type="password" name="password" value="" placeholder="Password"></p>
+                <p><input class="signup-form-input" type="text" name="username" value="" placeholder="Username" required></p>
+                <p><input class="signup-form-input" type="email" name="email" value="" placeholder="Email" required></p>
+                <p><input class="signup-form-input" type="text" name="first_name" value="" placeholder="First Name" required></p>
+                <p><input class="signup-form-input" type="text" name="last_name" value="" placeholder="Last Name" required></p>
+                <p><input class="signup-form-input" type="password" name="password" value="" placeholder="Password" required></p>
+                <p><input class="signup-form-input" type="password" name="password" value="" placeholder="Repeat Password" required></p>
                 <hr>
-                <p class="remember_me">
-                    <label>
-                        <input type="checkbox" name="remember_me" id="remember_me">
-                        Remember me on this computer
-                    </label>
-                </p>
-                <p class="submit"><input type="submit" name="commit" value="Login"></p>
+                <p class="submit"><input type="submit" name="commit" value="Sign Up"></p>
             </form>
-            <hr>
-            <a href="/signup"><p style="color: black">Click here to sign up</p></a>
         </div>
     </div>
 </div>

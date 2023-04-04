@@ -251,7 +251,7 @@ hr {
 }
 
 .login input[type=text], .login input[type=password] {
-    width: 278px;
+    width: 40%;
 }
 
 .login p.remember_me {
@@ -276,4 +276,7 @@ hr {
     display: block;
     text-align: center;
     margin: 0;
+}
+.signup-form-input{
+    width: 40%;
 }
