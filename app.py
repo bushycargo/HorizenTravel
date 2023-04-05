@@ -111,26 +111,24 @@ def bookFlight():
         return 200
 
 
-@app.route(api + 'users/add')
+@app.route(api + 'users/add', methods=['POST'])
 def newUser():
     Database.connect()
 
-    username = request.args.get('username')
-    if Database.runSQL(f"SELECT t.* FROM `jh-horizen-travel`.user t WHERE username = '{username}'") != "[]":
-        return 406
-
-    password = request.args.get('password')
-    email = request.args.get('email')
-    firstname = request.args.get('firstname')
-    lastname = request.args.get('lastname')
-
+    username = request.form.get('username')
+    if len(Database.runSQL(f"SELECT t.* FROM `jh-horizen-travel`.user t WHERE username = '{username}'")) != 0:
+        return "User already exists"
+    password = request.form.get('password')
+    email = request.form.get('email')
+    firstname = request.form.get('first_name')
+    lastname = request.form.get('last_name')
     # Insert new user into database
     Database.runSQL(f"INSERT INTO `jh-horizen-travel`.user (firstName, lastName, username, password, email) "
                     f"VALUES ('{firstname}', '{lastname}', '{username}', '{password}', '{email}')")
 
     Database.disconnect()  # Disconn from database
     print(f"Made new user: {username}")
-    return 200  # Return code 200 OK
+    return redirect("/login")
 
 
 @app.route(api + 'users/update')

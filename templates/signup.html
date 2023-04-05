@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     <title>Horizon Travels</title>
     <link rel="stylesheet" href="/static/css/main.css">
-    <script src="/static/js/accountControls.js"></script>
-    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="static/js/sign-up.js"></script>
+
 </head>
 <body>
 <div class="grid-container">
@@ -30,15 +28,15 @@
     <div class="grid-item mid-content-box">
         <div class="login">
             <h1>Sign up</h1>
-            <form method="post" action="">
+            <form id="signup-form" method="post" action="/api/v1/users/add">
                 <p><input class="signup-form-input" type="text" name="username" value="" placeholder="Username" required></p>
                 <p><input class="signup-form-input" type="email" name="email" value="" placeholder="Email" required></p>
                 <p><input class="signup-form-input" type="text" name="first_name" value="" placeholder="First Name" required></p>
                 <p><input class="signup-form-input" type="text" name="last_name" value="" placeholder="Last Name" required></p>
-                <p><input class="signup-form-input" type="password" name="password" value="" placeholder="Password" required></p>
-                <p><input class="signup-form-input" type="password" name="password" value="" placeholder="Repeat Password" required></p>
+                <p><input class="signup-form-input" id="password" type="password" name="confirm_password" value="" placeholder="Password" required></p>
+                <p><input class="signup-form-input" id="confirm_password" type="password" name="password" value="" placeholder="Repeat Password" required></p>
                 <hr>
-                <p class="submit"><input type="submit" name="commit" value="Sign Up"></p>
+                <p class="submit"><input type="button" name="commit" onclick="validatePassword()" value="Sign Up"></p>
             </form>
         </div>
     </div>
