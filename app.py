@@ -111,6 +111,12 @@ def bookFlight():
         return 200
 
 
+@app.route(api + 'users/login', methods=['POST'])
+def loginUser():
+    # REMEMBER TO ADD REMEMBER ME FEATURE
+    return "test"
+
+
 @app.route(api + 'users/add', methods=['POST'])
 def newUser():
     Database.connect()
