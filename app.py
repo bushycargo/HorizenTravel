@@ -114,7 +114,16 @@ def bookFlight():
 @app.route(api + 'users/login', methods=['POST'])
 def loginUser():
     # REMEMBER TO ADD REMEMBER ME FEATURE
-    return "test"
+    return "temp_auth_token"
+
+
+@app.route(api + 'users/validate', methods=['POST'])
+def validateLogin():
+    data = request.get_data().decode('utf-8')
+    if data == "temp_auth_token":
+        return "true"
+    else:
+        return "false"
 
 
 @app.route(api + 'users/add', methods=['POST'])
