@@ -1,8 +1,10 @@
 import json
+import time
+
 import bcrypt
 import jwt
-
 from flask import Flask, render_template, request, redirect, make_response
+from jwt import InvalidSignatureError
 
 from dbfunc import DatabaseHandler
 
@@ -115,26 +117,65 @@ def bookFlight():
 
 @app.route(api + 'users/login', methods=['POST'])
 def loginUser():
-    # REMEMBER TO ADD REMEMBER ME FEATURE
     username = request.form.get("username")
     password = request.form.get("password")
+    remember_me = request.form.get("remember_me")
 
     Database.connect()
-    hashed_password = \
-    Database.runSQL(f"SELECT t.password FROM `jh-horizen-travel`.user t WHERE username = '{username}'")[0][0]
+    try:
+        hashed_password = \
+            Database.runSQL(f"SELECT t.password FROM `jh-horizen-travel`.user t WHERE username = '{username}'")[0][0]
+    except IndexError:
+        return "Invalid Login"
+
+    user_id = Database.runSQL(f"SELECT t.user_id FROM `jh-horizen-travel`.user t WHERE username = '{username}'")[0][0]
     Database.disconnect()
 
-    if bcrypt.checkpw(password.encode("utf-8"), hashed_password):
-        return "temp_auth_token"
+    if bcrypt.checkpw(password.encode("utf-8"), hashed_password.encode("utf-8")):
+        if remember_me == "on":
+            payload_data = {
+                "sub": f"{user_id}",
+                "username": f"{username}",
+                "exp": time.time() + 86400 * 365
+            }
+        else:
+            payload_data = {
+                "sub": f"{user_id}",
+                "username": f"{username}",
+                "exp": time.time() + 86400
+            }
+
+        auth_token = jwt.encode(
+            payload=payload_data,
+            key=hashed_password
+        )
+        return auth_token
+    else:
+        return "Invalid Login"
 
 
 @app.route(api + 'users/validate', methods=['POST'])
 def validateLogin():
-    data = request.get_data().decode('utf-8')
-    if data == "temp_auth_token":
-        return "true"
-    else:
+    return validateJWT(request.get_data().decode('utf-8'))
+
+
+def validateJWT(data):
+    try:
+        unverified_decoded = jwt.decode(data, options={"verify_signature": False})
+    except jwt.exceptions.DecodeError:
         return "false"
+
+    user_id = unverified_decoded.get("sub")
+
+    Database.connect()
+    password_hash = Database.runSQL(f"SELECT t.password FROM `jh-horizen-travel`.user t WHERE user_id = '{user_id}'")[0][0]
+    Database.disconnect()
+
+    try:
+        decoded = jwt.decode(data, key=password_hash, algorithms=['HS256'])
+    except InvalidSignatureError:
+        return "false"
+    return "true"
 
 
 @app.route(api + 'users/add', methods=['POST'])
@@ -152,8 +193,8 @@ def newUser():
     hashed_password = bcrypt.hashpw(password.encode("utf-8"), salt)
 
     # Insert new user into database
-    Database.runSQL(f"INSERT INTO `jh-horizen-travel`.user (firstName, lastName, username, password, email) "
-                    f"VALUES ('{firstname}', '{lastname}', '{username}', '{hashed_password}', '{email}')")
+    Database.runSQL(f'INSERT INTO `jh-horizen-travel`.user (firstName, lastName, username, password, email) '
+                    f'VALUES ("{firstname}", "{lastname}", "{username}", "{hashed_password.decode("utf-8")}", "{email}")')
 
     Database.disconnect()  # Disconn from database
     print(f"Made new user: {username}")
@@ -168,6 +209,10 @@ def updateUser():
     email = request.args.get('email')
     firstname = request.args.get('firstname')
     lastname = request.args.get('lastname')
+    auth_token = request.args.get('auth_token')
+
+    if not validateJWT(auth_token):
+        return redirect("/login")
 
     Database.connect()
     if Database.runSQL(f"SELECT t.password FROM `jh-horizen-travel`.user t WHERE username = '{username}'")[0][
