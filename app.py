@@ -1,4 +1,6 @@
 import json
+import bcrypt
+import jwt
 
 from flask import Flask, render_template, request, redirect, make_response
 
@@ -114,7 +116,16 @@ def bookFlight():
 @app.route(api + 'users/login', methods=['POST'])
 def loginUser():
     # REMEMBER TO ADD REMEMBER ME FEATURE
-    return "temp_auth_token"
+    username = request.form.get("username")
+    password = request.form.get("password")
+
+    Database.connect()
+    hashed_password = \
+    Database.runSQL(f"SELECT t.password FROM `jh-horizen-travel`.user t WHERE username = '{username}'")[0][0]
+    Database.disconnect()
+
+    if bcrypt.checkpw(password.encode("utf-8"), hashed_password):
+        return "temp_auth_token"
 
 
 @app.route(api + 'users/validate', methods=['POST'])
@@ -137,9 +148,12 @@ def newUser():
     email = request.form.get('email')
     firstname = request.form.get('first_name')
     lastname = request.form.get('last_name')
+    salt = bcrypt.gensalt()
+    hashed_password = bcrypt.hashpw(password.encode("utf-8"), salt)
+
     # Insert new user into database
     Database.runSQL(f"INSERT INTO `jh-horizen-travel`.user (firstName, lastName, username, password, email) "
-                    f"VALUES ('{firstname}', '{lastname}', '{username}', '{password}', '{email}')")
+                    f"VALUES ('{firstname}', '{lastname}', '{username}', '{hashed_password}', '{email}')")
 
     Database.disconnect()  # Disconn from database
     print(f"Made new user: {username}")
