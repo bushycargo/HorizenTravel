@@ -1,6 +1,5 @@
 const search_API = "/api/v1/search";
 let logged_in = false;
-const check_login_xhr = new XMLHttpRequest();
 
 const search_page_top = `
 <h2>Search</h2>
@@ -24,9 +23,6 @@ function searchAgain(){
     window.location.reload()
 }
 function search(){
-    if (getCookie("logged_in") === "false"){
-        location.replace("/login")
-    }
     const search_form = document.getElementById("booking-form")
     const search_form_data = new FormData(search_form)
     const search_xhr = new XMLHttpRequest();
@@ -86,7 +82,9 @@ function loadSearchResults(search_data, airports_data){
 
 }
 function book(){
-
+    if (getCookie("logged_in") === "false"){
+        location.replace("/login")
+    }
 }
 
 function getCookie(cname) {
