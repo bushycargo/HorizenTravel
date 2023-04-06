@@ -5,6 +5,7 @@
     <title>Horizon Travels</title>
     <link rel="stylesheet" href="/static/css/main.css">
     <script src="static/js/sign-up.js"></script>
+    <script src="static/js/sign-out.js"></script>
 
 </head>
 <body>
@@ -16,14 +17,15 @@
                 <ul class="menu-left menu-item">
                     <li><a href="/about">About</a></li>
                     <li><a href="/book">Book</a></li>
-                    <li id="login"><a href="/login">Login</a></li>
+                    <li id="login" class="disabled"><a href="/login">Login</a></li>
                 </ul>
                 <ul class="menu-right menu-item">
-                    <li id="account"><a href="/account">Account</a></li>
+                    <li id="account" class="disabled"><a href="/account">Account</a></li>
                     <li id="signOut" class="disabled"><a onclick="signOut()">Sign Out</a></li>
                 </ul>
             </div>
         </div>
+        <script src="../static/js/check-logged-in.js"></script>
     </header>
     <div class="grid-item mid-content-box">
         <div class="login">

@@ -1,6 +1,6 @@
 function signOut(){
     setCookie("auth_token", "", 0)
-    window.location.replace("/login")
+    window.location.reload()
 }
 
 function setCookie(cname, cvalue, exdays) {
