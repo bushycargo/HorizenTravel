@@ -60,22 +60,22 @@ def getAirports():
     Database.connect()
     airports = Database.runSQL("SELECT t.* FROM `jh-horizen-travel`.airport t")
     Database.disconnect()
-    return json.dumps(airports)
+    response = make_response(json.dumps(airports))
+    response.headers['Content-Type'] = 'application/json'
+    return response
 
 
-@app.route(api + 'search', methods=['GET'])
+@app.route(api + 'search', methods=['POST'])
 def searchFlights():
     # Needs either origin or destination in airport code (e.g. BHX)
-    Database.connect()  # Connect Database
-    try:
-        origin = request.json["origin"]
-    except KeyError:
-        origin = None
-    try:
-        destination = request.json["destination"]
-    except KeyError:
+    origin = request.form.get("origin_airport")
+    destination = request.form.get("destination_airport")
+    if destination == "":
         destination = None
+    if origin == "":
+        origin = None
 
+    Database.connect()
     if destination is None:  # If destination is empty then it must be an origin only search
         output = Database.runSQL(
             f"SELECT t.* FROM `jh-horizen-travel`.flight t WHERE origin = '{origin}' ORDER BY flightNumber")
@@ -87,7 +87,6 @@ def searchFlights():
             f"SELECT t.* FROM `jh-horizen-travel`.flight t WHERE origin = '{origin}' AND destination = '{destination}' "
             f"ORDER BY flightNumber")
 
-    print(output)
     Database.disconnect()  # Disconnect Database
     response = make_response(json.dumps(output))
     response.headers['Content-Type'] = 'application/json'

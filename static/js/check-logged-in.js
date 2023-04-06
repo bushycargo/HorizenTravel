@@ -1,9 +1,10 @@
 let jwt_token = getCookie("auth_token")
-const xhr = new XMLHttpRequest();
+
 const sign_out_button = document.getElementById("signOut")
 const sign_in_button = document.getElementById("login")
 const account_button = document.getElementById("account")
 
+const xhr = new XMLHttpRequest();
 xhr.open("POST", "/api/v1/users/validate")
 xhr.onload = function (event){
     if (event.target.response !== "true"){
@@ -15,6 +16,7 @@ xhr.onload = function (event){
 }
 xhr.send(jwt_token)
 function isLoggedIn(){
+    setCookie("logged_in", "true", 1)
     if(window.location.pathname === "/login" || window.location.pathname === "/signup"){
         window.location.replace("/")
     }
@@ -33,6 +35,7 @@ function isLoggedIn(){
     }
 }
 function isLoggedOut(){
+    setCookie("logged_in", "false", 1)
     // If on account page when logged out then redirect to log in page.
     if (window.location.pathname === "/account"){
         window.location.replace("/login")
@@ -67,4 +70,11 @@ function getCookie(cname) {
         }
     }
     return "";
+}
+
+function setCookie(cname, cvalue, exdays) {
+  const d = new Date();
+  d.setTime(d.getTime() + (exdays*24*60*60*1000));
+  let expires = "expires="+ d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }

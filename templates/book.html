@@ -5,6 +5,7 @@
     <title>Horizon Travels</title>
     <link rel="stylesheet" href="/static/css/main.css">
     <script src="static/js/sign-out.js"></script>
+    <script src="/static/js/search.js"></script>
 </head>
 <body>
 <div class="grid-container">
@@ -25,13 +26,13 @@
         </div>
         <script src="../static/js/check-logged-in.js"></script>
     </header>
-    <div class="grid-item mid-content-box">
+    <div id="search-form-mid-content-box" class="grid-item mid-content-box">
         <h2>Booking</h2>
         <form class="cssP" id="booking-form">
             <hr>
             <div class="booking-form-inline">
                 <label for="adult">Adults</label>
-                <input type="number" id="adult" name="total_adults" placeholder="1" min="1" required>
+                <input type="number" id="adult" name="total_adults" placeholder="0" min="1" required>
             </div>
             <div class="booking-form-inline">
                 <label for="child">Children</label>
@@ -51,24 +52,41 @@
                 <label for="origin_airport">Origin Airport</label>
                 <select id="origin_airport" name="origin_airport" >
                     <option value="">Choose an Airport</option>
-                    <option value="connecting">Connecting</option>
-                    <option value="adjoining">Adjoining</option>
-                    <option value="adjacent">Adjacent</option>
+                    <option value="ABZ">Aberdeen</option>
+                    <option value="BHX">Birmingham</option>
+                    <option value="BRS">Bristol</option>
+                    <option value="CWL">Cardiff</option>
+                    <option value="DND">Dundee</option>
+                    <option value="EDI">Edinburgh</option>
+                    <option value="GLA">Glasgow</option>
+                    <option value="LGW">London Gatwick</option>
+                    <option value="MAN">Manchester</option>
+                    <option value="NCL">Newcastle</option>
+                    <option value="PSM">Portsmouth</option>
+                    <option value="SOU">Southampton</option>
                 </select>
             </div>
             <div class="booking-form-inline">
                 <label for="destination_airport">Destination Airport</label>
                 <select id="destination_airport" name="destination_airport" >
                     <option value="">Choose an Airport</option>
-                    <option value="connecting">Connecting</option>
-                    <option value="adjoining">Adjoining</option>
-                    <option value="adjacent">Adjacent</option>
+                    <option value="ABZ">Aberdeen</option>
+                    <option value="BHX">Birmingham</option>
+                    <option value="BRS">Bristol</option>
+                    <option value="CWL">Cardiff</option>
+                    <option value="DND">Dundee</option>
+                    <option value="EDI">Edinburgh</option>
+                    <option value="GLA">Glasgow</option>
+                    <option value="LGW">London Gatwick</option>
+                    <option value="MAN">Manchester</option>
+                    <option value="NCL">Newcastle</option>
+                    <option value="PSM">Portsmouth</option>
+                    <option value="SOU">Southampton</option>
                 </select>
             </div>
             <hr>
-            <button type="submit" id="submit" style="background-color: #F9F904; color: #520075">Search for Flights</button>
+            <button onclick="search()" type="button" id="submit" style="background-color: #F9F904; color: #520075">Search</button>
         </form>
-        <br>
         <hr>
         <a href="/signup"><p>If you don't have an account with us please click here.</p></a>
     </div>
