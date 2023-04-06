@@ -70,6 +70,7 @@ def searchFlights():
     # Needs either origin or destination in airport code (e.g. BHX)
     origin = request.form.get("origin_airport")
     destination = request.form.get("destination_airport")
+    passengers = request.form.get("total_adults") + request.form.get("total_children")
     if destination == "":
         destination = None
     if origin == "":
@@ -87,8 +88,13 @@ def searchFlights():
             f"SELECT t.* FROM `jh-horizen-travel`.flight t WHERE origin = '{origin}' AND destination = '{destination}' "
             f"ORDER BY flightNumber")
 
+    flight_data = []
+    for flight in output:
+        if flight[5] > int(passengers):
+            flight_data.insert(0, flight)
+
     Database.disconnect()  # Disconnect Database
-    response = make_response(json.dumps(output))
+    response = make_response(json.dumps(flight_data))
     response.headers['Content-Type'] = 'application/json'
     return response
 
@@ -167,7 +173,8 @@ def validateJWT(data):
     user_id = unverified_decoded.get("sub")
 
     Database.connect()
-    password_hash = Database.runSQL(f"SELECT t.password FROM `jh-horizen-travel`.user t WHERE user_id = '{user_id}'")[0][0]
+    password_hash = \
+    Database.runSQL(f"SELECT t.password FROM `jh-horizen-travel`.user t WHERE user_id = '{user_id}'")[0][0]
     Database.disconnect()
 
     try:
