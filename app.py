@@ -38,6 +38,8 @@ def book():  # put application's code here
 
 @app.route('/account')
 def account():
+    if validateJWT(request.cookies.get("auth_token")) == "false":
+        return redirect("/login")
     return render_template("account.html")
 
 
@@ -49,6 +51,20 @@ def loginPage():
 @app.route('/signup')
 def signupPage():
     return render_template("signup.html")
+
+
+@app.route('/admin')
+def adminPage():
+    if validateJWT(request.cookies.get("auth_token")) == "false":
+        return redirect("/login")
+    user_id = jwt.decode(request.cookies.get("auth_token"), options={"verify_signature": False}).get("sub")
+    Database.connect()
+    is_admin = Database.runSQL(f"SELECT t.is_admin FROM `jh-horizen-travel`.user t WHERE user_id = '{user_id}'")[0][0]
+    Database.disconnect()
+    if is_admin == 1:
+        return render_template("admin.html")
+    else:
+        return redirect("/login")
 
 
 # API- todo
