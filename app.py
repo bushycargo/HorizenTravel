@@ -99,25 +99,29 @@ def searchFlights():
     return response
 
 
-@app.route(api + "book/new")
+@app.route(api + "book/new", methods=['POST'])
 def bookFlight():
-    Database.connect()
-    user_id = request.json['user_id']
+    auth_token = request.cookies.get("auth_token")
+    if validateJWT(auth_token) == "false":
+        return "Invalid Auth Token"
+
+    user_id = jwt.decode(auth_token, options={"verify_signature": False}).get("sub")
     flight_number = request.json['flight_number']
     passengers = request.json['passengers']
 
+    Database.connect()
     current_bookings = \
         Database.runSQL(f"SELECT t.* FROM `jh-horizen-travel`.flight t WHERE flightNumber = {flight_number}")[0][5]
     if current_bookings < passengers:
-        return 406
+        return "Invalid Number of Passengers"
     else:
         Database.runSQL(
             f"UPDATE `jh-horizen-travel`.flight t SET t.bookings = {current_bookings - passengers} WHERE t.flightNumber = {flight_number}")
         Database.runSQL(
-            f"INSERT INTO `jh-horizen-travel`.booking (user_id, flight_number) VALUES ({user_id}, {flight_number})")
+            f"INSERT INTO `jh-horizen-travel`.booking (user_id, flight_number, passengers) VALUES ({user_id}, {flight_number}, {passengers})")
         print(f"Created new booking for user: {user_id}")
         Database.disconnect()
-        return 200
+        return "200"
 
 
 @app.route(api + 'users/login', methods=['POST'])
@@ -125,16 +129,30 @@ def loginUser():
     username = request.form.get("username")
     password = request.form.get("password")
     remember_me = request.form.get("remember_me")
+    return generateJWT(username, password, remember_me)
 
-    Database.connect()
+
+@app.route(api + 'users/validate', methods=['POST'])
+def validateLogin():
+    return validateJWT(request.get_data().decode('utf-8'))
+
+
+def generateJWT(username, password, remember_me):
+    db_on = False
+    if not Database.dbconnection.is_connected():
+        Database.connect()
+        db_on = True
+
+    user_id = Database.runSQL(f"SELECT t.user_id FROM `jh-horizen-travel`.user t WHERE username = '{username}'")[0][0]
+
     try:
         hashed_password = \
             Database.runSQL(f"SELECT t.password FROM `jh-horizen-travel`.user t WHERE username = '{username}'")[0][0]
     except IndexError:
         return "Invalid Login"
 
-    user_id = Database.runSQL(f"SELECT t.user_id FROM `jh-horizen-travel`.user t WHERE username = '{username}'")[0][0]
-    Database.disconnect()
+    if db_on:
+        Database.disconnect()
 
     if bcrypt.checkpw(password.encode("utf-8"), hashed_password.encode("utf-8")):
         if remember_me == "on":
@@ -159,11 +177,6 @@ def loginUser():
         return "Invalid Login"
 
 
-@app.route(api + 'users/validate', methods=['POST'])
-def validateLogin():
-    return validateJWT(request.get_data().decode('utf-8'))
-
-
 def validateJWT(data):
     try:
         unverified_decoded = jwt.decode(data, options={"verify_signature": False})
@@ -174,7 +187,7 @@ def validateJWT(data):
 
     Database.connect()
     password_hash = \
-    Database.runSQL(f"SELECT t.password FROM `jh-horizen-travel`.user t WHERE user_id = '{user_id}'")[0][0]
+        Database.runSQL(f"SELECT t.password FROM `jh-horizen-travel`.user t WHERE user_id = '{user_id}'")[0][0]
     Database.disconnect()
 
     try:
@@ -209,31 +222,37 @@ def newUser():
 
 @app.route(api + 'users/update')
 def updateUser():
-    username = request.args.get('username')
+    auth_token = request.headers.get("auth_token")
+    jwt_data = jwt.decode(auth_token, options={"verify_signature": False})
+    user_id = jwt_data.get("sub")
     new_password = request.args.get('new_password')
-    old_password = request.args.get('old_password')
+    old_password = request.args.get('old_password').encode("utf-8")
     email = request.args.get('email')
     firstname = request.args.get('firstname')
     lastname = request.args.get('lastname')
-    auth_token = request.args.get('auth_token')
 
     if not validateJWT(auth_token):
         return redirect("/login")
 
     Database.connect()
-    if Database.runSQL(f"SELECT t.password FROM `jh-horizen-travel`.user t WHERE username = '{username}'")[0][
-        0] != old_password:
-        return 406
-    if len(new_password) >= 2:
+
+    old_hashed_password = \
+        Database.runSQL(f"SELECT t.password FROM `jh-horizen-travel`.user t WHERE user_id = '{user_id}'")[0][0]
+    if not bcrypt.checkpw(old_password, old_hashed_password):
+        return "Invalid Password"
+
+    if len(new_password) >= 8:
+        salt = bcrypt.gensalt()
+        new_hashed_password = bcrypt.hashpw(new_password.encode("utf-8"), salt)
         Database.runSQL(
-            f"UPDATE `jh-horizen-travel`.user t SET t.password = {new_password} WHERE username = '{username}'")
+            f"UPDATE `jh-horizen-travel`.user t SET t.password = {new_hashed_password} WHERE user_id = '{user_id}'")
     if len(email) >= 2:
-        Database.runSQL(f"UPDATE `jh-horizen-travel`.user t SET t.email = {email} WHERE username = '{username}'")
+        Database.runSQL(f"UPDATE `jh-horizen-travel`.user t SET t.email = {email} WHERE user_id = '{user_id}'")
     if len(firstname) >= 2:
         Database.runSQL(
-            f"UPDATE `jh-horizen-travel`.user t SET t.firstName = {firstname} WHERE username = '{username}'")
+            f"UPDATE `jh-horizen-travel`.user t SET t.firstName = {firstname} WHERE user_id = '{user_id}'")
     if len(lastname) >= 2:
-        Database.runSQL(f"UPDATE `jh-horizen-travel`.user t SET t.lastName = {lastname} WHERE username = '{username}'")
+        Database.runSQL(f"UPDATE `jh-horizen-travel`.user t SET t.lastName = {lastname} WHERE user_id = '{user_id}'")
     Database.disconnect()
     return 200
 
