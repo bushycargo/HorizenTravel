@@ -38,7 +38,7 @@
             <h3>Account Settings</h3>
             <hr>
             <ul class="cssP">
-                <li><a onclick="change_password_box()">Change Password</a></li>
+                <li style="padding: 15px"><a onclick="change_password_box()">Change Password</a></li>
                 <li><a onclick="change_email_box()">Change Email</a></li>
             </ul>
         </div>
@@ -47,6 +47,8 @@
             <hr>
             <div class="cssP">
                 <a href="/account/current-bookings"><p>Current Bookings</p></a>
+                <a id="admin-panel" class="disabled" href="/admin"><p>Admin Panel</p></a>
+                <script src="/static/js/check-admin.js"></script>
             </div>
         </div>
     </div>

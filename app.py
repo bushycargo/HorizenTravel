@@ -160,6 +160,7 @@ def generateJWT(username, password, remember_me):
         db_on = True
 
     user_id = Database.runSQL(f"SELECT t.user_id FROM `jh-horizen-travel`.user t WHERE username = '{username}'")[0][0]
+    is_admin = Database.runSQL(f"SELECT t.is_admin FROM `jh-horizen-travel`.user t WHERE username = '{username}'")[0][0]
 
     try:
         hashed_password = \
@@ -175,13 +176,15 @@ def generateJWT(username, password, remember_me):
             payload_data = {
                 "sub": f"{user_id}",
                 "username": f"{username}",
-                "exp": time.time() + 86400 * 365
+                "exp": time.time() + 86400 * 365,
+                "admin":{is_admin}
             }
         else:
             payload_data = {
                 "sub": f"{user_id}",
                 "username": f"{username}",
-                "exp": time.time() + 86400
+                "exp": time.time() + 86400,
+                "admin": f"{is_admin}"
             }
 
         auth_token = jwt.encode(
