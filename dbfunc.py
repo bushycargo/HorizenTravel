@@ -36,6 +36,8 @@ class DatabaseHandler:
         # self.tunnel.close()
         self.dbconnection.close()
 
+    # Only needs to be run ONCE when connecting to new database
+    # Fills the database with the sample data given
     def getFlightData(self):
         with open('flightData.json', 'r') as file:
             flightdata = json.load(file)
