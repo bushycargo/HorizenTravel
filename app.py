@@ -220,16 +220,13 @@ def newUser():
     return redirect("/login")
 
 
-@app.route(api + 'users/update')
+@app.route(api + 'users/update', methods=['POST'])
 def updateUser():
-    auth_token = request.headers.get("auth_token")
-    jwt_data = jwt.decode(auth_token, options={"verify_signature": False})
-    user_id = jwt_data.get("sub")
-    new_password = request.args.get('new_password')
-    old_password = request.args.get('old_password').encode("utf-8")
-    email = request.args.get('email')
-    firstname = request.args.get('firstname')
-    lastname = request.args.get('lastname')
+    auth_token = request.cookies.get("auth_token")
+    user_id = jwt.decode(auth_token, options={"verify_signature": False}).get("sub")
+    new_password = request.form.get('new_password')
+    old_password = request.form.get('old_password').encode("utf-8")
+    email = request.form.get('new_email')
 
     if not validateJWT(auth_token):
         return redirect("/login")
@@ -238,23 +235,22 @@ def updateUser():
 
     old_hashed_password = \
         Database.runSQL(f"SELECT t.password FROM `jh-horizen-travel`.user t WHERE user_id = '{user_id}'")[0][0]
-    if not bcrypt.checkpw(old_password, old_hashed_password):
+
+    if not bcrypt.checkpw(old_password, old_hashed_password.encode("utf-8")):
         return "Invalid Password"
 
-    if len(new_password) >= 8:
-        salt = bcrypt.gensalt()
-        new_hashed_password = bcrypt.hashpw(new_password.encode("utf-8"), salt)
-        Database.runSQL(
-            f"UPDATE `jh-horizen-travel`.user t SET t.password = {new_hashed_password} WHERE user_id = '{user_id}'")
-    if len(email) >= 2:
-        Database.runSQL(f"UPDATE `jh-horizen-travel`.user t SET t.email = {email} WHERE user_id = '{user_id}'")
-    if len(firstname) >= 2:
-        Database.runSQL(
-            f"UPDATE `jh-horizen-travel`.user t SET t.firstName = {firstname} WHERE user_id = '{user_id}'")
-    if len(lastname) >= 2:
-        Database.runSQL(f"UPDATE `jh-horizen-travel`.user t SET t.lastName = {lastname} WHERE user_id = '{user_id}'")
+    try:
+        if len(new_password) >= 8:
+            salt = bcrypt.gensalt()
+            new_hashed_password = bcrypt.hashpw(new_password.encode("utf-8"), salt)
+            Database.runSQL(
+                f'UPDATE `jh-horizen-travel`.user t SET t.password = "{new_hashed_password.decode("utf-8")}" WHERE user_id = "{user_id}"')
+    except TypeError:
+        if len(email) >= 2:
+            Database.runSQL(f"UPDATE `jh-horizen-travel`.user t SET t.email = '{email}' WHERE user_id = {user_id}")
+
     Database.disconnect()
-    return 200
+    return redirect("/login")
 
 
 @app.route(api + 'contact-form', methods=['POST'])

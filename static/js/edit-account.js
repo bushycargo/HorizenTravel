@@ -3,9 +3,9 @@ function change_email_box() {
     element.innerHTML = `
     <div class="login">
         <h1>Change Email</h1>
-        <form method="post" action="">
+        <form method="post" action="/api/v1/users/update">
             <p><input class="signup-form-input" type="email" name="new_email" value="" placeholder="New Email" required></p>
-            <p><input class="signup-form-input" type="password" name="password" value="" placeholder="Password" required></p>
+            <p><input class="signup-form-input" type="password" name="old_password" value="" placeholder="Password" required></p>
             <hr>
             <p class="submit"><input type="submit" name="commit" value="Change Email"></p>
         </form>
@@ -18,7 +18,7 @@ function change_password_box(){
     element.innerHTML = `
     <div class="login">
         <h1>Change Password</h1>
-        <form method="post" action="">
+        <form method="post" action="/api/v1/users/update">
             <p><input class="signup-form-input" type="password" name="old_password" value="" placeholder="Old Password" required></p>
             <p><input class="signup-form-input" type="password" name="new_password" value="" placeholder="New Password" required></p>
             <hr>
