@@ -71,16 +71,6 @@ def adminPage():
 api = '/api/v1/'
 
 
-@app.route(api + 'get/airports')
-def getAirports():
-    Database.connect()
-    airports = Database.runSQL("SELECT t.* FROM `jh-horizen-travel`.airport t")
-    Database.disconnect()
-    response = make_response(json.dumps(airports))
-    response.headers['Content-Type'] = 'application/json'
-    return response
-
-
 @app.route(api + 'search', methods=['POST'])
 def searchFlights():
     # Needs either origin or destination in airport code (e.g. BHX)
@@ -177,7 +167,7 @@ def generateJWT(username, password, remember_me):
                 "sub": f"{user_id}",
                 "username": f"{username}",
                 "exp": time.time() + 86400 * 365,
-                "admin":{is_admin}
+                "admin": {is_admin}
             }
         else:
             payload_data = {
@@ -290,6 +280,81 @@ def contactForm():
 @app.route(api + 'admin/report')
 def generateAdminReport():
     return 501
+
+
+# Get routes
+@app.route(api + 'get/airports')
+def getAirports():
+    Database.connect()
+    airports = Database.runSQL("SELECT t.* FROM `jh-horizen-travel`.airport t")
+    Database.disconnect()
+    response = make_response(json.dumps(airports))
+    response.headers['Content-Type'] = 'application/json'
+    return response
+
+
+@app.route(api + "get/flights")
+def getFlights():
+    Database.connect()
+    flights = Database.runSQL("SELECT t.* FROM `jh-horizen-travel`.flight t")
+    Database.disconnect()
+    response = make_response(json.dumps(flights))
+    response.headers['Content-Type'] = 'application/json'
+    return response
+
+
+@app.route(api + "get/contact")
+def getContactForm():
+    if validateJWT(request.cookies.get("auth_token")) == "false":
+        return None
+    user_id = jwt.decode(request.cookies.get("auth_token"), options={"verify_signature": False}).get("sub")
+    Database.connect()
+    is_admin = Database.runSQL(f"SELECT t.is_admin FROM `jh-horizen-travel`.user t WHERE user_id = '{user_id}'")[0][0]
+    if is_admin == 1:
+        contact_form = Database.runSQL(f"SELECT t.* FROM `jh-horizen-travel`.form t")
+        Database.disconnect()
+        response = make_response(json.dumps(contact_form))
+        response.headers['Content-Type'] = 'application/json'
+        return response
+    else:
+        Database.disconnect()
+        return None
+
+
+@app.route(api + "get/bookings")
+def getBookings():
+    if validateJWT(request.cookies.get("auth_token")) == "false":
+        return None
+    user_id = jwt.decode(request.cookies.get("auth_token"), options={"verify_signature": False}).get("sub")
+    Database.connect()
+    is_admin = Database.runSQL(f"SELECT t.is_admin FROM `jh-horizen-travel`.user t WHERE user_id = '{user_id}'")[0][0]
+    if is_admin == 1:
+        bookings = Database.runSQL(f"SELECT t.* FROM `jh-horizen-travel`.booking t")
+        Database.disconnect()
+        response = make_response(json.dumps(bookings))
+        response.headers['Content-Type'] = 'application/json'
+        return response
+    else:
+        Database.disconnect()
+        return None
+
+
+@app.route(api + "get/users")
+def getUsers():
+    if validateJWT(request.cookies.get("auth_token")) == "false":
+        return None
+    user_id = jwt.decode(request.cookies.get("auth_token"), options={"verify_signature": False}).get("sub")
+    Database.connect()
+    is_admin = Database.runSQL(f"SELECT t.is_admin FROM `jh-horizen-travel`.user t WHERE user_id = '{user_id}'")[0][0]
+    if is_admin == 1:
+        users = Database.runSQL(f"SELECT t.user_id, t.username, t.firstName, t.lastName, t.email FROM `jh-horizen-travel`.user t")
+        Database.disconnect()
+        response = make_response(json.dumps(users))
+        response.headers['Content-Type'] = 'application/json'
+        return response
+    else:
+        Database.disconnect()
+        return None
 
 
 if __name__ == '__main__':

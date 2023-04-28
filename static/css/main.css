@@ -283,3 +283,6 @@ hr {
 .search-table{
     padding-right: 10px;
 }
+.admin-item{
+    grid-row-start: 2;
+}
